@@ -1,5 +1,4 @@
 require('dotenv').config();
-const path = require('path');
 const express = require('express');
 const { supabase } = require('./database.js');
 const cors = require('cors');
@@ -74,13 +73,6 @@ if (error) {
   response.status(201).json(data);
 });
 
-
-// serve frontend build (ensure frontend is built to frontend/dist)
-const staticPath = path.join(__dirname, 'frontend', 'dist');
-app.use(express.static(staticPath));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(staticPath, 'index.html'));
-});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
