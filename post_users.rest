@@ -1,0 +1,9 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "TestyMan",
+    "highscore": 30,
+    "topic": "NBA",
+    "time": 30
+}
