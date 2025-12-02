@@ -18,7 +18,7 @@ function App() {
 
   // Function to fetch and show questions based on selected topic
   const showQuestions = async () => {
-    const response = await fetch('/questions');
+    const response = await fetch('/api/questions');
     const data = await response.json();
 
     if (!selectedTopic) {
@@ -49,7 +49,7 @@ function App() {
   };
 
   const postUserData = async (username, highscore, topic, time) => {
-    const response = await fetch('/users', {
+    const response = await fetch('/api/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, highscore, topic, time }),
@@ -76,7 +76,7 @@ function App() {
 
   useEffect(() => {
     const fetchHighScores = async () => {
-      const response = await fetch('/users');
+      const response = await fetch('/api/users');
       const data = await response.json();
 
       const filtered = data.filter(user => user.topic === leaderboardTopic);

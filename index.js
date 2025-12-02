@@ -22,7 +22,7 @@ app.get('/questions', async (request, response) => {
 // GET all users
 app.get('/users', async (request, response) => {
   const { data, error } = await supabase.from('users').select('*');
-
+ 
   if (error) {
     console.error('Error fetching user:', error);
     return response.status(500).json({ error: 'Database error' });
