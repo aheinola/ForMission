@@ -1,8 +1,12 @@
 const { createClient } = require('@supabase/supabase-js');
 
-const { supabase } = require('../database.js');
-
 module.exports = async function handler(req, res) {
+  // Create Supabase client
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+  );
+
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -18,7 +22,7 @@ module.exports = async function handler(req, res) {
 
     if (error) {
       console.error('Error fetching users:', error);
-      return res.status(500).json({ error: 'Database error' });
+      return res.status(500).json({ error: 'Database error', details: error.message });
     }
 
     return res.json(data);

@@ -1,6 +1,12 @@
-const { supabase } = require('../database.js');
+const { createClient } = require('@supabase/supabase-js');
 
 module.exports = async function handler(req, res) {
+  // Create Supabase client
+  const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+  );
+
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -27,7 +33,7 @@ module.exports = async function handler(req, res) {
           return res.status(404).json({ error: 'Question not found' });
         }
         console.error('Error fetching question:', error);
-        return res.status(500).json({ error: 'Database error' });
+        return res.status(500).json({ error: 'Database error', details: error.message });
       }
 
       return res.json(data);
@@ -37,7 +43,7 @@ module.exports = async function handler(req, res) {
 
       if (error) {
         console.error('Error fetching questions:', error);
-        return res.status(500).json({ error: 'Database error' });
+        return res.status(500).json({ error: 'Database error', details: error.message });
       }
 
       return res.json(data);
