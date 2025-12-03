@@ -1,3 +1,6 @@
+const fetch = require('node-fetch');
+global.fetch = fetch;
+
 const { createClient } = require('@supabase/supabase-js');
 
 module.exports = async function handler(req, res) {
