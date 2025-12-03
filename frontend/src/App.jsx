@@ -57,21 +57,23 @@ function App() {
     const data = await response.json();
     console.log('User data saved:', data);
   };
-
   const handleEndQuiz = async () => {
-    const timeTaken = Number(((Date.now() - quizStartTime) / 1000).toFixed(1));
-    await postUserData(username, score, selectedTopic, timeTaken);
-
-    if (!username) {
+    // require a username before posting to avoid accidental/double posts
+    if (!username || !username.trim()) {
       alert("write username");
       return;
     }
+
+    const timeTaken = Number(((Date.now() - quizStartTime) / 1000).toFixed(1));
+    // post only after we've validated the username
+    await postUserData(username.trim(), score, selectedTopic, timeTaken);
 
     setQuizStarted(false);
     setAllQuestions([]);
     setSelectedTopic(null);
     setScore(0);
     setCurrentQuestion(0);
+    setQuizStartTime(null);
   };
 
   useEffect(() => {
